@@ -1,4 +1,4 @@
-cask "firefox" do
+cask "gov-firefox" do
   version "140.0"
 
   language "ach" do
