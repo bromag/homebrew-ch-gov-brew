@@ -1,4 +1,4 @@
-cask "govpostman" do
+cask "gov-postman" do
   arch arm: "osx_arm64", intel: "osx64"
 
   version "11.50.5"
