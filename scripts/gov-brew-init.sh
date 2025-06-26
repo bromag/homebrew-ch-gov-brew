@@ -4,27 +4,26 @@ set -e
 TAP_NAME="bromag/ch-gov-brew"
 TAP_PATH="/opt/homebrew/Library/Taps/bromag/homebrew-ch-gov-brew"
 
-echo "Ensuring tap '$TAP_NAME' is added..."
-if ! brew tap | grep -q "^$TAP_NAME$"; then
-  brew tap "$TAP_NAME"
-fi
+echo "Refreshing tap $TAP_NAME..."
+brew untap --force "$TAP_NAME"
+brew tap "$TAP_NAME"
 
-echo "Registering formulae with tap..."
+echo "Registering formulae..."
 if [ -d "$TAP_PATH/Formula" ]; then
-  for rb in "$TAP_PATH"/Formula/*.rb; do
-    [ -e "$rb" ] || continue
-    file=$(basename "$rb" .rb)
-    brew info --json=v2 "$TAP_NAME/$file" >/dev/null 2>&1 || true
+  for f in "$TAP_PATH/Formula"/*.rb; do
+    [ -e "$f" ] || continue
+    name=$(basename "$f" .rb)
+    brew info --json=v2 "$TAP_NAME/$name" >/dev/null 2>&1 || true
   done
 fi
 
-echo "Registering casks with tap..."
+echo "Registering casks..."
 if [ -d "$TAP_PATH/Casks" ]; then
-  for rb in "$TAP_PATH"/Casks/*.rb; do
-    [ -e "$rb" ] || continue
-    file=$(basename "$rb" .rb)
-    brew info --json=v2 --cask "$TAP_NAME/$file" >/dev/null 2>&1 || true
+  for c in "$TAP_PATH/Casks"/*.rb; do
+    [ -e "$c" ] || continue
+    name=$(basename "$c" .rb)
+    brew info --json=v2 --cask "$TAP_NAME/$name" >/dev/null 2>&1 || true
   done
 fi
 
-echo "gov-brew tap and metadata are now registered."
+echo "gov-brew tap setup complete."
