@@ -1,4 +1,4 @@
-class Wget < Formula
+class GovWget < Formula
   desc "Internet file retriever"
   homepage "https://www.gnu.org/software/wget/"
   url "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz"
